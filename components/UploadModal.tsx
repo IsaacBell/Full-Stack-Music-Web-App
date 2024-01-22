@@ -46,7 +46,6 @@ const UploadModal = () => {
         toast.error('Missing fields');
         return;
       }
-      // const uniqId = uniqid();
 
       //upload song
       const { data: songData, error: songError } = await supabaseClient.storage
@@ -59,7 +58,7 @@ const UploadModal = () => {
         console.log({songData, songError})
       if (songError) {
         setisLoading(false);
-        return toast.error('Failed song upload');
+        return toast.error(songError.message ?? 'Failed song upload');
       }
 
       const { data: imageData, error: imageError } =
@@ -72,7 +71,7 @@ const UploadModal = () => {
           console.log({imageData, imageError})
       if (imageError) {
         setisLoading(false);
-        return toast.error('Failed image upload');
+        return toast.error(imageError.message ?? 'Failed image upload');
       }
 
       const { error: supabaseError } = await supabaseClient

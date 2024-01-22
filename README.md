@@ -5,24 +5,10 @@ Forked from Beatboxxx.
 Welcome to the Music Web Application repository! This project aims to provide users with a feature-rich, fully responsive music streaming platform similar to Spotify. Users can discover, listen to, and upload their own songs seamlessly on any device. The application is built using Next.js13, React, TypeScript, and Supabase, offering a delightful and consistent user experience across various screen sizes.
 
 
-## Demo
-
-https://beatboxx.vercel.app/
-
-## Project Demo video
-https://youtu.be/MWWtlCL7dP4
-
-
 ## Features
 
-- Stream and listen to a vast collection of songs across various genres, artists, and albums.
-- Upload and share your own music creations with the community.
-- Curate your favorite songs in the Liked Library for easy access.
-- Free subscription allows users to upload one song, while premium subscription offers unlimited uploads and exclusive perks.
-- Integrated Stripe payment gateway in test mode for secure and convenient subscription upgrades.
-- Robust authentication system requiring sign up or login to access the app's features.
-- Play, pause, and control the volume of the currently playing song.
-- Navigate to the next or previous song in the playlist.
+- ML embeddings system for music recommendations
+- Generative AI used for stem extraction, album art generation
 
 
 ## Screenshots
@@ -59,7 +45,7 @@ Liked songs page
  ```bash
   git clone https://github.com/IsaacBell/Stem-Space.git
  ```
-2. Install dependencies:    
+2. Configure the app:    
 ```bash
  cd Stem-Space
  npm install

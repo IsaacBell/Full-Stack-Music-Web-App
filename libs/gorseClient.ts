@@ -2,8 +2,8 @@ import { TDateISO } from "@/types";
 import { Gorse, Item, User } from "gorsejs";
 
 const auth = {
-  gorseApiKey: process.env.GORSE_API_KEY ?? 'test',
-  gorseApiUrl: process.env.GORSE_API_URL ?? "https://8087-isaacbell-fullstackmusi-k4bf2x74hut.ws-us107.gitpod.io",
+  gorseApiKey: process.env.GORSE_SERVER_API_KEY ?? 'test',
+  gorseApiUrl: process.env.GORSE_SERVER_API_URL ?? "http://127.0.0.1:8087",
 }
 const client = new Gorse({ endpoint: auth.gorseApiUrl, secret: auth.gorseApiKey });
 

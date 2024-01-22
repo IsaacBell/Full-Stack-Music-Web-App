@@ -1,16 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Replicate, { Prediction } from "replicate";
 import { defaultPrediction } from "./(utils)";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
 });
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
   let prediction = defaultPrediction;
 
-  const input = req.query.next;
+  const input = req.nextUrl.searchParams.get('next');
   if (input && !Array.isArray(input)) {
     prediction = await replicate.predictions.get(input);
   }

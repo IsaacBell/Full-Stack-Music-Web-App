@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import Replicate, { Prediction } from "replicate";
 import { defaultPrediction } from "./(utils)";
 import { NextApiOptionalResponse } from "@/types";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const maxDuration = 300;
 
@@ -79,10 +79,10 @@ const getDefaultOutput = async (prompt: string): Promise<any> =>
     { input: { prompt } },
   );
 
-const startDeployment = async (req: NextApiRequest): Promise<any | null> => {
+const startDeployment = async (json: any): Promise<any | null> => {
   const {
-    body: { file, filename, toolname, prompt, fileFormat },
-  } = req;
+    file, filename, toolname, prompt, fileFormat
+  } = json;
 
   switch (toolname) {
     case "":
@@ -96,7 +96,7 @@ const startDeployment = async (req: NextApiRequest): Promise<any | null> => {
     case "cover-art-gen":
       return getAestheticOutput(prompt);
     case "debug":
-      return { req };
+      return { json };
     default: {
       const prediction = defaultPrediction;
       prediction.error = 'Tool name not provided'
@@ -105,21 +105,23 @@ const startDeployment = async (req: NextApiRequest): Promise<any | null> => {
   }
 };
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
   if (!process.env.REPLICATE_API_TOKEN) {
     throw new Error(
       "The REPLICATE_API_TOKEN environment variable is not set. See README.md for instructions on how to set it.",
     );
   }
 
-  const prediction = await startDeployment(req);
+  const json = await req.json();
+
+  const prediction = await startDeployment(json);
 
   if (prediction?.error) {
     const errMsg = prediction?.error ?? 'Error retrieving prediction';
     return new NextResponse(errMsg, { status: 500});
   }
 
-  if (!req.body.continuous) {
+  if (!json.continuous) {
     return NextResponse.json({ prediction }, { status: 200 });
   }
 

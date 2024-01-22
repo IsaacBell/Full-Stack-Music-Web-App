@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Replicate, { Prediction } from "replicate";
 import { defaultPrediction } from "./(utils)";
+import { NextApiOptionalResponse } from "@/types";
+import { NextResponse } from "next/server";
 
 export const maxDuration = 300;
 
@@ -103,7 +105,7 @@ const startDeployment = async (req: NextApiRequest): Promise<any | null> => {
   }
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextApiRequest) {
   if (!process.env.REPLICATE_API_TOKEN) {
     throw new Error(
       "The REPLICATE_API_TOKEN environment variable is not set. See README.md for instructions on how to set it.",
@@ -113,19 +115,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const prediction = await startDeployment(req);
 
   if (prediction?.error) {
-    res.statusCode = 500;
-    const err = JSON.stringify({ detail: prediction?.error });
-    res.end(err);
-    return;
+    const errMsg = prediction?.error ?? 'Error retrieving prediction';
+    return new NextResponse(errMsg, { status: 500});
   }
 
   if (!req.body.continuous) {
-    res.end(JSON.stringify(prediction));
-    return;
+    return NextResponse.json({ prediction }, { status: 200 });
   }
 
-  // const result = await replicate.wait(prediction);
-
-  // res.statusCode = 201;
-  // res.end(JSON.stringify(result));
+  const result = await replicate.wait(prediction);
+  return NextResponse.json({ result }, { status: 200 });
 }

@@ -2,7 +2,7 @@ import { MLFeedback, insertMLFeedback, insertMLItemEmbedding, insertMLUserEmbedd
 import { Date as Iso86Date } from "@/types";
 import { Item, User } from "gorsejs";
 import { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 // example code - don't run in production!
 const _demo = async () => {
@@ -28,19 +28,22 @@ const _demo = async () => {
   console.log({res});
 }
 
-export async function POST(req: NextApiRequest) {
-  if (!req.body?.type)
+export async function POST(req: NextRequest) {
+  const json = await req.json();
+  const { type, data } = json;
+
+  if (!type)
     return new NextResponse(`Error: ${'err msg'}`, { status: 400 });
 
   let output;
   
-  switch(req.body?.type.toLowerCase()) {
+  switch(type.toLowerCase()) {
     case 'user': 
-      output = await insertMLUserEmbedding(req.body.data as User);
+      output = await insertMLUserEmbedding(data as User);
     case 'item': 
-      output = await insertMLItemEmbedding(req.body.data as Item);
+      output = await insertMLItemEmbedding(data as Item);
     case 'feedback': 
-      output = await insertMLFeedback(req.body.data as MLFeedback[]);
+      output = await insertMLFeedback(data as MLFeedback[]);
     default:
       output = '';
     }

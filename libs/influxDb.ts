@@ -44,7 +44,7 @@ export const getSongPlayCount = async (songId: string, range: TimeQueryRange) =>
     
     if (result.length > 0) {
       console.log(`Total play count for song ${songId}: ${result?.[0]?.toString()}`);
-      return result?.[0]?._value ?? result?.[0]?.toString();
+      return (result?.[0] as any)?._value ?? result?.[0]?.toString();
     } else {
       console.log(`No plays found for song ${songId}`);
       return 0;
@@ -123,7 +123,7 @@ export const getUserEngagementStats = async (
     const result = await queryApi.collectRows<ParameterizedQuery>(query);
 
     console.log(`User engagement stats for user ${userId}: ${result?.[0]?.toString()}`);
-    return result?.[0]?._value ?? result?.[0]?.toString() ?? '';
+    return (result?.[0] as any)?._value ?? result?.[0]?.toString() ?? '';
   } catch (error) {
     console.error(`Error querying InfluxDB: ${error}`);
     throw error;
@@ -161,7 +161,7 @@ export const getSearchTermFrequency = async (
     const result = await queryApi.collectRows<ParameterizedQuery>(query);
 
     console.log(`Search frequency for term "${searchTerm}": ${result?.[0]?.toString()}`);
-    return result?.[0]?._value ?? result?.[0]?.toString() ?? '';
+    return (result?.[0] as any)?._value ?? result?.[0]?.toString() ?? '';
   } catch (error) {
     console.error(`Error querying InfluxDB: ${error}`);
     throw error;

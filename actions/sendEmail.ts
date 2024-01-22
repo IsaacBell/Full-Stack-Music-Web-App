@@ -14,7 +14,7 @@ const sendEmail = async (email: EmailProps) => {
     type: email.type ?? '',
   }
   
-  const response = await fetch("/api/mail/send", {
+  const response = await fetch("/api/mail", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

@@ -1,9 +1,8 @@
 import { recommend } from "@/libs/gorseClient";
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 type UserType = 'user' | 'admin';
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest, res: NextResponse) {
   const path = req.url?.split('/') ?? [];
 
   if (path.length === 0) {

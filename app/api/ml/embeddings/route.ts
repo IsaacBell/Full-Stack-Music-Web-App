@@ -8,18 +8,18 @@ import { NextRequest, NextResponse } from "next/server";
 const _demo = async () => {
   const date: string = new Date().toISOString();
 
-  insertMLUserEmbedding({UserId: 'bob', Labels: ['Rap', 'Techno']});
+  await insertMLUserEmbedding({UserId: 'bob', Labels: ['Rap', 'Techno']});
 
-  insertMLItemEmbedding({ ItemId: 'item1', Categories: ['Rap'], IsHidden: false, Timestamp: date })
-  insertMLItemEmbedding({ ItemId: 'item2', Categories: ['Rap', 'Gospel'], IsHidden: false, Timestamp: date })
-  insertMLItemEmbedding({ ItemId: 'item3', Categories: ['Country', 'Gospel'], IsHidden: false, Timestamp: date })
-  insertMLItemEmbedding({ ItemId: 'item4', Categories: ['Americana', 'Gospel'], IsHidden: false, Timestamp: date })
-  insertMLItemEmbedding({ ItemId: 'item5', Categories: ['Jazz', 'Rock'], IsHidden: false, Timestamp: date })
-  insertMLItemEmbedding({ ItemId: 'item6', Categories: ['Rap', 'Gospel'], IsHidden: false, Timestamp: date })
-  insertMLItemEmbedding({ ItemId: 'liked-item1', Categories: ['Rap'], IsHidden: false, Timestamp: date })
-  insertMLItemEmbedding({ ItemId: 'liked-item2', Categories: ['Gospel', 'Rap'], IsHidden: false, Timestamp: date })
+  await insertMLItemEmbedding({ ItemId: 'item1', Categories: ['Rap'], IsHidden: false, Timestamp: date })
+  await insertMLItemEmbedding({ ItemId: 'item2', Categories: ['Rap', 'Gospel'], IsHidden: false, Timestamp: date })
+  await insertMLItemEmbedding({ ItemId: 'item3', Categories: ['Country', 'Gospel'], IsHidden: false, Timestamp: date })
+  await insertMLItemEmbedding({ ItemId: 'item4', Categories: ['Americana', 'Gospel'], IsHidden: false, Timestamp: date })
+  await insertMLItemEmbedding({ ItemId: 'item5', Categories: ['Jazz', 'Rock'], IsHidden: false, Timestamp: date })
+  await insertMLItemEmbedding({ ItemId: 'item6', Categories: ['Rap', 'Gospel'], IsHidden: false, Timestamp: date })
+  await insertMLItemEmbedding({ ItemId: 'liked-item1', Categories: ['Rap'], IsHidden: false, Timestamp: date })
+  await insertMLItemEmbedding({ ItemId: 'liked-item2', Categories: ['Gospel', 'Rap'], IsHidden: false, Timestamp: date })
 
-  insertMLFeedback([
+  await insertMLFeedback([
     { FeedbackType: 'like', UserId: 'bob', ItemId: 'liked-item1', Timestamp: date },
     { FeedbackType: 'like', UserId: 'bob', ItemId: 'liked-item2', Timestamp: date },
   ])
@@ -28,7 +28,7 @@ const _demo = async () => {
   console.log({res});
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest, res: NextResponse) {    
   const json = await req.json();
   const { type, data } = json;
 
@@ -37,15 +37,19 @@ export async function POST(req: NextRequest) {
 
   let output;
   
-  switch(type.toLowerCase()) {
+  switch(type) {
     case 'user': 
-      output = await insertMLUserEmbedding(data as User);
+      output = await insertMLUserEmbedding({...(data as User)});
+      break;
     case 'item': 
-      output = await insertMLItemEmbedding(data as Item);
+      output = await insertMLItemEmbedding({...(data as Item)});
+      break;
     case 'feedback': 
-      output = await insertMLFeedback(data as MLFeedback[]);
+      output = await insertMLFeedback(data ?? []);
+      break;
     default:
       output = '';
+      break;
     }
 
     if (!output)

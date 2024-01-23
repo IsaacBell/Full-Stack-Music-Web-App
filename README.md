@@ -60,3 +60,29 @@ npm run dev
 ```
 5. Open your browser and visit `http://localhost:3000` to access the application.
 
+## Gitpod Setup
+
+Common Issues:
+
+```powershell
+[Gorse][Request] POST https://8087-isaacbell-fullstackmusi-k4bf2x74hut.ws-us107.gitpod.io/user {"X-API-Key":"test"} {"UserId":"bob","Labels":["Rap","Techno"]}
+[Gorse][Error] POST https://8087-isaacbell-fullstackmusi-k4bf2x74hut.ws-us107.gitpod.io/user 401:Unauthorized {}
+
+ ⨯ GorseException
+    at eval (webpack-internal:///(rsc)/./node_modules/gorsejs/dist/client.js:35:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async insertMLUserEmbedding (webpack-internal:///(rsc)/./libs/gorseClient.ts:20:45)
+    at async _demo (webpack-internal:///(rsc)/./app/api/ml/embeddings/route.ts:12:15)
+    at async POST (webpack-internal:///(rsc)/./app/api/ml/embeddings/route.ts:45:5)
+    at async /workspace/Full-Stack-Music-Web-App/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:62609 {
+  code: 401
+}
+```
+
+Fix this by making the following ports public:
+
+- 3000
+- 8087
+- 8088
+- 8089
+- 8090

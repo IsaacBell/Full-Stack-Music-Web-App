@@ -86,3 +86,23 @@ Fix this by making the following ports public:
 - 8088
 - 8089
 - 8090
+
+## Debugging
+
+```typescript
+fetch("/api/ml/embeddings", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({type: 'user', data: {UserId: 'bob', Labels: ['Rap', 'Techno']} }),
+});
+fetch("/api/ml/embeddings/123", {
+  method: "GET",
+  headers: { "Content-Type": "application/json" },
+});
+fetch("/api/mail", {
+  method: "POST",
+  headers: { "Accept": "application/json", "Content-Type": "application/json" },
+  body: JSON.stringify(
+    {to: 'isaacbell388@gmail.com', msg: 'blah', subject: 'Yes', from: 'blah@thesoapstone.net'}),
+});
+```

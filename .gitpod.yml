@@ -6,3 +6,38 @@
 
 tasks:
   - init: bash start-server.sh
+ports:
+    - name: Next Server
+      port: 3000
+      onOpen: open-browser
+    - name: PostgresDB15
+      description: Postgresql 2015
+      port: 5439
+      onOpen: ignore
+    - name: Jaeger
+      port: 4318
+      onOpen: ignore
+    - name: Jaeger
+      port: 16686
+      onOpen: ignore
+    - name: RabbitMQ
+      port: 5672
+      onOpen: ignore
+    - name: RabbitMQ
+      port: 15672
+      onOpen: ignore
+    - name: Redis
+      port: 6379
+      onOpen: ignore
+    - name: Gorse - Redis Cache
+      port: 6378
+      onOpen: ignore
+    - name: Gorse - Server
+      port: 8087
+      onOpen: notify
+    - name: Gorse - Master
+      port: 8088-8095
+      onOpen: ignore
+    - name: Supabase Studio
+      port: 54320-54325
+      onOpen: ignore

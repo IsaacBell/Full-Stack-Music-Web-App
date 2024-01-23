@@ -132,9 +132,19 @@ services:
         # - postgres
         - mongo
         # - clickhouse
+    jaeger:
+        image: jaegertracing/all-in-one:${JAEGER_VERSION:-latest}
+        ports:
+        - "16686:16686"
+        - "4318:4318"
+        environment:
+        - LOG_LEVEL=debug
+        networks:
+        - tracing_net
 networks:
   rabbitmq_go_net:
     driver: bridge
+  tracing_net:
 volumes:
   pg_data: {}
   gorse_worker_data:

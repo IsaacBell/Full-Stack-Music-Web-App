@@ -1,23 +1,23 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Replicate, { Prediction } from "replicate";
 import { defaultPrediction } from "./(utils)";
+import { NextRequest, NextResponse } from "next/server";
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
 });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest) {
   let prediction = defaultPrediction;
 
-  const input = req.query.next;
-  if (input && !Array.isArray(input))
+  const input = req.nextUrl.searchParams.get('next');
+  if (input && !Array.isArray(input)) {
     prediction = await replicate.predictions.get(input);
-
-  if (prediction?.error) {
-    res.statusCode = 500;
-    res.end(JSON.stringify({ detail: prediction.error }));
-    return;
   }
 
-  res.end(JSON.stringify(prediction));
+  if (prediction?.error) {
+    return NextResponse.json({ error: prediction }, { status: 500 });
+  }
+
+  return NextResponse.json({ prediction }, { status: 200 });
 }

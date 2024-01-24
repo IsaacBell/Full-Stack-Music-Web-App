@@ -1,28 +1,17 @@
-Forked from Beatboxxx.
+_[Originally Forked from [Beatboxxx](https://github.com/adityayaduvanshi/Full-Stack-Music-Web-App)]_
 
-### Beatboxx | Music Web Application
+# Stem Space
 
-Welcome to the Music Web Application repository! This project aims to provide users with a feature-rich, fully responsive music streaming platform similar to Spotify. Users can discover, listen to, and upload their own songs seamlessly on any device. The application is built using Next.js13, React, TypeScript, and Supabase, offering a delightful and consistent user experience across various screen sizes.
+This project aims to provide (a) listeners with a music streaming platform similar to Spotify, and (b) artists a platform to generate creative content and manage their existing catalogs. 
 
 
-## Demo
-
-https://beatboxx.vercel.app/
-
-## Project Demo video
-https://youtu.be/MWWtlCL7dP4
+The application is built using Next.js13, React, TypeScript, and Supabase.
 
 
 ## Features
 
-- Stream and listen to a vast collection of songs across various genres, artists, and albums.
-- Upload and share your own music creations with the community.
-- Curate your favorite songs in the Liked Library for easy access.
-- Free subscription allows users to upload one song, while premium subscription offers unlimited uploads and exclusive perks.
-- Integrated Stripe payment gateway in test mode for secure and convenient subscription upgrades.
-- Robust authentication system requiring sign up or login to access the app's features.
-- Play, pause, and control the volume of the currently playing song.
-- Navigate to the next or previous song in the playlist.
+- ML embeddings system for music recommendations
+- Generative AI used for stem extraction, album art generation
 
 
 ## Screenshots
@@ -51,6 +40,11 @@ Liked songs page
 - **Stripe:** A widely-used payment gateway for securely handling subscription payments and transactions.
 - **Tailwind CSS:** A highly customizable CSS framework that provides utility classes for building responsive and modern user interfaces.
 - **PostgreSQL:** An open-source relational database management system used for storing and managing the application's data.
+- **Jaeger**
+- **InfluxDB**
+- **MongoDB**
+- **Redis**
+- **Kafka**
 
 ## Installation
 
@@ -59,14 +53,15 @@ Liked songs page
  ```bash
   git clone https://github.com/IsaacBell/Stem-Space.git
  ```
-2. Install dependencies:    
+2. Configure the app:    
 ```bash
  cd Stem-Space
- npm install
+ bash ./start-server.sh
 ```
 3. Set up environment variables:  
 
  - Create a `.env.local` file in the root directory.
+ - Ask a team member for the correct variables for your environment
 
 4. Run the application:
 ```bash
@@ -74,3 +69,49 @@ npm run dev
 ```
 5. Open your browser and visit `http://localhost:3000` to access the application.
 
+## Gitpod Setup
+
+Common Issues:
+
+```powershell
+[Gorse][Request] POST https://8087-isaacbell-fullstackmusi-k4bf2x74hut.ws-us107.gitpod.io/user {"X-API-Key":"test"} {"UserId":"bob","Labels":["Rap","Techno"]}
+[Gorse][Error] POST https://8087-isaacbell-fullstackmusi-k4bf2x74hut.ws-us107.gitpod.io/user 401:Unauthorized {}
+
+ ⨯ GorseException
+    at eval (webpack-internal:///(rsc)/./node_modules/gorsejs/dist/client.js:35:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async insertMLUserEmbedding (webpack-internal:///(rsc)/./libs/gorseClient.ts:20:45)
+    at async _demo (webpack-internal:///(rsc)/./app/api/ml/embeddings/route.ts:12:15)
+    at async POST (webpack-internal:///(rsc)/./app/api/ml/embeddings/route.ts:45:5)
+    at async /workspace/Full-Stack-Music-Web-App/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:62609 {
+  code: 401
+}
+```
+
+Fix this by making the following ports public:
+
+- 3000
+- 8087
+- 8088
+- 8089
+- 8090
+
+## Debugging
+
+```typescript
+fetch("/api/ml/embeddings", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({type: 'user', data: {UserId: 'bob', Labels: ['Rap', 'Techno']} }),
+});
+fetch("/api/ml/embeddings/123", {
+  method: "GET",
+  headers: { "Content-Type": "application/json" },
+});
+fetch("/api/mail", {
+  method: "POST",
+  headers: { "Accept": "application/json", "Content-Type": "application/json" },
+  body: JSON.stringify(
+    {to: 'isaacbell388@gmail.com', msg: 'blah', subject: 'Yes', from: 'blah@thesoapstone.net'}),
+});
+```

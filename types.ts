@@ -1,4 +1,23 @@
 import Stripe from 'stripe';
+import type {
+  Date,
+  TDateISO,
+  TDateISOTime,
+  TDateISODate,
+} from '@/utils/ISO86Date';
+
+export {
+  Date,
+  TDateISO,
+  TDateISOTime,
+  TDateISODate,
+};
+
+export interface NextApiResponseData {
+  message: string
+}
+
+export type NextApiOptionalResponse = null | NextApiResponseData;
 
 export interface Song {
   id: string;

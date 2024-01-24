@@ -1,6 +1,7 @@
 import { NextApiRequest } from 'next';
 import * as React from 'react';
 import Box from './Box';
+import { NextRequest } from 'next/server';
 
 interface EmailTemplateProps {
   firstName?: string;
@@ -28,9 +29,9 @@ export const FirstNameEmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   </div>
 );
 
-export const emailTemplateFromType = (type: string, req: NextApiRequest) => {
-  if (type === 'firstName' && req.body?.firstName)
-    return <FirstNameEmailTemplate firstName={req.body.firstName } />;
+export const emailTemplateFromType = (type: string, json: any) => {
+  if (type === 'firstName' && json.firstName)
+    return <FirstNameEmailTemplate firstName={json.firstName } />;
   
   return <DefaultEmailTemplate />;
 }

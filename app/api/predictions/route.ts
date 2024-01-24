@@ -4,6 +4,60 @@ import { defaultPrediction } from "./(utils)";
 import { NextApiOptionalResponse } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * @swagger
+ *   /api/replicate:
+ *     get:
+ *       summary: Retrieve predictions from text and multimedia ML models
+ *       description: This endpoint is used for generating various types of outputs from ML models, including drum loops, stem generation, subtitle generation, cover art, and more.
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - toolname
+ *               properties:
+ *                 toolname:
+ *                   type: string
+ *                   description: Name of the tool to use for generation
+ *                 prompt:
+ *                   type: string
+ *                   description: Prompt for text-based generation
+ *                 file:
+ *                   type: string
+ *                   format: binary
+ *                   description: File for processing
+ *                 filename:
+ *                   type: string
+ *                   description: Name of the file for processing
+ *                 fileFormat:
+ *                   type: string
+ *                   description: Format of the file for processing
+ *       responses:
+ *         '200':
+ *           description: Successful retrieval of prediction
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   result:
+ *                     type: object
+ *                     description: The result of the prediction
+ *         '500':
+ *           description: Internal Server Error
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   error:
+ *                     type: string
+ *                     description: Error message
+ */
+
 export const maxDuration = 300;
 
 const replicate = new Replicate({

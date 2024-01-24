@@ -28,6 +28,91 @@ const _demo = async () => {
   console.log({res});
 }
 
+/**
+* @swagger
+*   /api/ml/embeddings:
+*     post:
+*       summary: Inserts a machine learning embedding
+*       description: Inserts either a user embedding, item embedding, or feedback into the recommendation system.
+*       requestBody:
+*         required: true
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               required:
+*                 - type
+*                 - data
+*               properties:
+*                 type:
+*                   type: string
+*                   enum: [user, item, feedback]
+*                 data:
+*                   oneOf:
+*                     - $ref: '#/components/schemas/User'
+*                     - $ref: '#/components/schemas/Item'
+*                     - $ref: '#/components/schemas/Feedback'
+*       responses:
+*         200:
+*           description: Successful insertion of the embedding
+*           content:
+*             application/json:
+*               schema:
+*                 type: object
+*                 properties:
+*                   result:
+*                     type: string
+*         400:
+*           description: Invalid request
+*           content:
+*             application/json:
+*               schema:
+*                 type: object
+*                 properties:
+*                   error:
+*                     type: string
+* 
+* components:
+*   schemas:
+*     User:
+*       type: object
+*       properties:
+*         UserId:
+*           type: string
+*         Labels:
+*           type: array
+*           items:
+*             type: string
+* 
+*     Item:
+*       type: object
+*       properties:
+*         ItemId:
+*           type: string
+*         Categories:
+*           type: array
+*           items:
+*             type: string
+*         IsHidden:
+*           type: boolean
+*         Timestamp:
+*           type: string
+*           format: date-time
+* 
+*     Feedback:
+*       type: object
+*       properties:
+*         FeedbackType:
+*           type: string
+*           enum: [like, dislike]
+*         UserId:
+*           type: string
+*         ItemId:
+*           type: string
+*         Timestamp:
+*           type: string
+*           format: date-time
+ */
 export async function POST(req: NextRequest, res: NextResponse) {    
   const json = await req.json();
   const { type, data } = json;

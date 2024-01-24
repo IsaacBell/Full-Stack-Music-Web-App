@@ -13,6 +13,8 @@ export {
   TDateISODate,
 };
 
+export type UserType = 'user' | 'admin';
+
 export interface NextApiResponseData {
   message: string
 }

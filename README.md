@@ -1,8 +1,11 @@
-Forked from Beatboxxx.
+_[Originally Forked from [Beatboxxx](https://github.com/adityayaduvanshi/Full-Stack-Music-Web-App)]_
 
-### Beatboxx | Music Web Application
+# Stem Space
 
-Welcome to the Music Web Application repository! This project aims to provide users with a feature-rich, fully responsive music streaming platform similar to Spotify. Users can discover, listen to, and upload their own songs seamlessly on any device. The application is built using Next.js13, React, TypeScript, and Supabase, offering a delightful and consistent user experience across various screen sizes.
+This project aims to provide (a) listeners with a music streaming platform similar to Spotify, and (b) artists a platform to generate creative content and manage their existing catalogs. 
+
+
+The application is built using Next.js13, React, TypeScript, and Supabase.
 
 
 ## Features
@@ -37,6 +40,11 @@ Liked songs page
 - **Stripe:** A widely-used payment gateway for securely handling subscription payments and transactions.
 - **Tailwind CSS:** A highly customizable CSS framework that provides utility classes for building responsive and modern user interfaces.
 - **PostgreSQL:** An open-source relational database management system used for storing and managing the application's data.
+- **Jaeger**
+- **InfluxDB**
+- **MongoDB**
+- **Redis**
+- **Kafka**
 
 ## Installation
 
@@ -48,11 +56,12 @@ Liked songs page
 2. Configure the app:    
 ```bash
  cd Stem-Space
- npm install
+ bash ./start-server.sh
 ```
 3. Set up environment variables:  
 
  - Create a `.env.local` file in the root directory.
+ - Ask a team member for the correct variables for your environment
 
 4. Run the application:
 ```bash
